@@ -35,4 +35,54 @@ export const useCustomerLedger = () => {
   const { writeContractAsync, data: hash, error, isPending } = useWriteContract()
 
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt(
+    useWaitForTransactionReceipt({ hash })
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  const addCustomer = async (customerAddr: string, name: string) => {
+    setIsLoading(true)
+    try {
+      await writeContractAsync({
+        address: contractAddress,
+        abi: contractABI,
+        functionName: "addCustomer",
+        args: [customerAddr as `0x${string}`, name],
+      })
+      await refetch()
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const updateBalance = async (customerAddr: string, amount: number) => {
+    setIsLoading(true)
+    try {
+      await writeContractAsync({
+        address: contractAddress,
+        abi: contractABI,
+        functionName: "updateBalance",
+        args: [customerAddr as `0x${string}`, BigInt(amount)],
+      })
+      await refetch()
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const state: ContractState = {
+    isLoading: isLoading || isPending || isConfirming,
+    isPending,
+    isConfirming,
+    isConfirmed,
+    hash,
+    error,
+  }
+
+  return {
+    customer: customerData
+      ? { name: customerData[0], balance: Number(customerData[1]) }
+      : null,
+    actions: { addCustomer, updateBalance },
+    state,
+  }
+}
