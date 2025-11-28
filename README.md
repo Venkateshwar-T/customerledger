@@ -1,64 +1,71 @@
-# Customer Ledger — Prototype dApp
-## 📌 Project Title
+# Customer Ledger DApp (Flare Network)
 
-# Customer Ledger (Prototype dApp on Flare Coston2 Testnet)
-## 📍 Contract Address
+## 📌 Contract Address  
+**0xd739900ACbC55c4f052af03b505e36dAcf08Df99**  
+Explorer: https://coston2-explorer.flare.network/address/0xd739900ACbC55c4f052af03b505e36dAcf08Df99
 
-0xd739900ACbC55c4f052af03b505e36dAcf08Df99
+---
 
-# 🔗 Explorer:
-https://coston2-explorer.flare.network/address/0xd739900ACbC55c4f052af03b505e36dAcf08Df99
+## 📝 Project Overview  
+The **Customer Ledger DApp** is a lightweight decentralized application built on the **Flare Coston2 Testnet**.  
+It provides a simple and trustless way to **store customer records** directly on-chain.  
+Each customer is identified by their wallet address and mapped to:
 
-# 📘 Description
+- Their **name**
+- Their **current balance**
 
-Customer Ledger is a simple Solidity-based prototype that stores customer records on-chain.
-It allows adding customers, updating balances, and fetching stored information from the contract.
+This ledger system enables fast, transparent, and tamper-proof customer management suitable for both personal and business applications.
 
-# 🧩 Features
+---
 
-Add new customer entries
+## 🎯 Purpose  
+Traditional databases require centralized control, making them vulnerable to manipulation, loss, or unauthorized access.  
+This project solves that by placing customer information on-chain, ensuring:
 
-Update existing customer balances
+- **Immutability**  
+- **Transparency**  
+- **High availability**  
+- **Owner-controlled interaction via wallet**  
 
-Retrieve customer details
+It’s ideal for learning how to integrate smart contracts with a frontend using wagmi/viem + Next.js.
 
-On-chain storage
+---
 
-Gas-efficient structure
+## 🚀 Key Features
 
-# 🛠 Tech Stack
+### ✅ **Add Customers**
+- Register any address with a customer name.
+- Automatically initializes their balance to 0.
 
-Solidity
+### ✅ **Retrieve Customer Info**
+- Fetch a customer's registered name and balance in real time.
+- Responses are returned in a simple, predictable tuple:  
+  `name: string`, `balance: uint256`.
 
-Flare Coston2 Testnet
+### ✅ **Update Customer Balance**
+- Increase or decrease a customer's balance using positive or negative values.
+- Perfect for implementing:
+  - Credit/debit systems  
+  - Reward systems  
+  - Trackers for expenses, payments, or dues  
 
-Remix + MetaMask
+### ✅ **Fully On-Chain Data**
+- No backend or database needed.
+- All records read/write directly to the blockchain.
 
-Flare Explorer
+### ✅ **Frontend Integration (Next.js + wagmi + viem)**
+Includes ready-to-use:
+- Contract hook  
+- Sample UI  
+- Wallet connection gating  
+- Error handling  
+- Loading state display  
 
-# 🚀 How to Use
+---
 
-Deploy the contract (no constructor inputs required).
+## 🧩 How It Works (Architecture)
 
-Use addCustomer() to create a record.
-
-Call getCustomer() to fetch details.
-
-Use updateBalance() to modify balances.
-
-# 📄 Example
-addCustomer(1, "Alice", 5000);
-getCustomer(1); // ("Alice", 5000)
-
-updateBalance(1, 6500);
-getCustomer(1); // ("Alice", 6500)
-
-# 📦 Future Enhancements
-
-Event logs for changes
-
-Owner-only access control
-
-Transaction history per customer
-
-UI dashboard
+### 1. **Smart Contract**
+Manages a mapping:  
+```solidity
+mapping(address => Customer)
